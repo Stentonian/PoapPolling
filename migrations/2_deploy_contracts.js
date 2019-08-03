@@ -12,7 +12,7 @@ module.exports = function (deployer) {
 
     const questionText = "Is this a test question?"
     const questionId = await poll.addQuestion.call(questionText, 18000)
-    await poll.addQuestion(questionText)
+    await poll.addQuestion(questionText, 18000)
 
     var answerText = "This is an answer 1"
     await poll.addAnswer(questionId, answerText)
