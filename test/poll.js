@@ -6,24 +6,39 @@ contract("Poll", accounts => {
 let verifier;
 let poll;
 
-beforeEach(async () => {
-    verifier = await Verifier.new();
-    poll  = await Poll.new(verifier.address);
-});
-  
-  it("...testingtesting123", async () => {
+const addQuestion = async () => {
     const questionText = "Is this a test question?"
-
-    // set the question text
 
     const questionId = await poll.addQuestion.call(questionText)
     assert.equal(questionId, 0, "Invalid question ID returned")
 
     await poll.addQuestion(questionText)
 
-    // Get stored value
-    const storedData = await poll.getQuestion.call(questionId)
+    return questionId
+  }
 
-    assert.equal(storedData, questionText, "The question text was not stored correctly.");
+beforeEach(async () => {
+    verifier = await Verifier.new();
+    poll  = await Poll.new(verifier.address);
+});
+  
+  it("...adding question", async () => {
+    const questionId = await addQuestion()
+    const storedData = await poll.getQuestion.call(questionId)
+    assert.equal(storedData, "Is this a test question?", "The question text was not stored correctly.");
   });
+
+  it("...adding answer", async () => {
+      const questionId = await addQuestion()
+      const answerText = "This is an answer"
+      
+      const answerId = await poll.addAnswer.call(questionId, answerText)
+      assert.equal(answerId, 0, "Invalid answer ID returned")
+
+      await poll.addAnswer(questionId, answerText)
+
+      const storedData = await poll.getAnswer.call(questionId, answerId)
+      assert.equal(storedData, answerText)
+  });
+
 });
