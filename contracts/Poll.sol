@@ -20,6 +20,9 @@ contract Poll is Ownable {
         mapping (uint8 => Answer) possibleAnswers;
         uint256 creationTime;
         uint256 endTime;
+
+        string creatorsName;
+        string creatorsOrganisation;
     }
 
     struct Answer {
@@ -102,6 +105,14 @@ contract Poll is Ownable {
 
     function getNumAnswers(uint8 _questionId) public onlyValidQuestionIds(_questionId) view returns (uint8) {
         return questions[_questionId].answerIdCounter;
+    }
+
+    function getCreatorsNameForQuestion(uint8 _questionId) public onlyValidQuestionIds(_questionId) view returns (string memory) {
+        return questions[_questionId].creatorsName;
+    }
+
+    function getCreatorsOrganisationForQuestion(uint8 _questionId) public onlyValidQuestionIds(_questionId) view returns (string memory) {
+        return questions[_questionId].creatorsOrganisation;
     }
 
 }

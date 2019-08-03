@@ -9,10 +9,10 @@ contract("Poll", accounts => {
     const addQuestion = async () => {
         const questionText = "Is this a test question?"
 
-        const questionId = await poll.addQuestion.call(questionText)
+        const questionId = await poll.addQuestion.call(questionText, 18000, "Team", "ETHIndia")
         assert.equal(questionId, 0, "Invalid question ID returned")
 
-        await poll.addQuestion(questionText)
+        await poll.addQuestion(questionText, 18000, "Team", "ETHIndia")
 
         return questionId
     }
