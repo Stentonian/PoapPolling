@@ -4,7 +4,7 @@ import "./Ownable.sol";
 
 contract VerifierInterface is Ownable {
     function setPoapToken(address _address) public;
-    function isUserAbleToSubmitAnswer(address _user) public pure returns (bool);
+    function verifyUserOwnsAtLeastOnePoapToken(address _user) public view;
 }
 
 contract Poll is Ownable {
@@ -56,6 +56,10 @@ contract Poll is Ownable {
 
     function setPoapToken(address _address) public /*onlyOwner*/ {
         verifierInterface.setPoapToken(_address);
+    }
+
+    function verifyUserOwnsAtLeastOnePoapToken(address _user) public view {
+        verifierInterface.verifyUserOwnsAtLeastOnePoapToken(_user);
     }
 
     function addQuestion(string calldata _questionText, uint duration) external /*onlyOwner*/ returns (uint8) {

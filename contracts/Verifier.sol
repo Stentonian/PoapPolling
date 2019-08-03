@@ -1,17 +1,21 @@
-
 pragma solidity ^0.5.0;
 
 import "./Ownable.sol";
 
-contract Verifier is Ownable {
-    address poapToken; // this should be an ERC721 token
+// this function comes from the ERC721 token
+contract PoapInterface {
+    function balanceOf(address owner) public view returns (uint256);
+}
 
-    function setPoapToken(address _address) public onlyOwner {
-        poapToken = _address;
+contract Verifier is Ownable {
+    PoapInterface poapToken;
+
+    function setPoapToken(address _address) public /*onlyOwner*/ {
+        poapToken = PoapInterface(_address);
     }
 
-    function isUserAbleToSubmitAnswer(address _user) public pure returns (bool) {
-        return true;
+    function verifyUserOwnsAtLeastOnePoapToken(address _user) public view {
+        require(poapToken.balanceOf(_user) > 0, "User does not own token");
     }
 
 }
