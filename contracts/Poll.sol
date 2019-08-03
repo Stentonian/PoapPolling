@@ -9,9 +9,9 @@ contract VerifierInterface is Ownable {
 
 contract Poll is Ownable {
 
-    VerifierInterface verifierInterface;
-    uint8 questionIdCounter;
-    mapping (uint8 => Question) questions;
+    VerifierInterface public verifierInterface;
+    uint8 public questionIdCounter;
+    mapping (uint8 => Question) public questions;
 
     struct Question {
         string questionText;
@@ -82,6 +82,14 @@ contract Poll is Ownable {
 
     function getAnswer(uint8 _questionId, uint8 _answerId) public onlyValidAnswerIds(_questionId, _answerId) view returns (string memory) {
         return questions[_questionId].possibleAnswers[_answerId].answerText;
+    }
+
+    function getNumQuestions() public view returns (uint8) {
+        return questionIdCounter;
+    }
+
+    function getNumAnswers(uint8 _questionId) public onlyValidQuestionIds(_questionId) view returns (uint8) {
+        return questions[_questionId].answerIdCounter;
     }
 
 }
