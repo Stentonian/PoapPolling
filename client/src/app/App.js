@@ -19,6 +19,9 @@ import NotFound from '../common/NotFound';
 import LoadingIndicator from '../common/LoadingIndicator';
 import PrivateRoute from '../common/PrivateRoute';
 
+import Offline from './Offline'
+import Dapp from './Dapp'
+
 import { Layout, notification } from 'antd';
 const { Content } = Layout;
 
@@ -100,11 +103,16 @@ class App extends Component {
 
           <Content className="app-content">
             <div className="container">
+              <p>jason is here</p>
+              <Offline>
+                <Dapp/>
+                <p>jason is here</p>
+              </Offline>
               <Switch>      
-                <Route exact path="/" 
+                {/* <Route exact path="/" 
                   render={(props) => <PollList isAuthenticated={this.state.isAuthenticated} 
                       currentUser={this.state.currentUser} handleLogout={this.handleLogout} {...props} />}>
-                </Route>
+                </Route> */}
                 {/* <Route path="/login" 
                   render={(props) => <Login onLogin={this.handleLogin} {...props} />}></Route>
                 <Route path="/signup" component={Signup}></Route>
