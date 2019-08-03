@@ -11,8 +11,8 @@ module.exports = function (deployer) {
     console.log("Address of Poll contract: " + Poll.address)
 
     const questionText = "Is this a test question?"
-    const questionId = await poll.addQuestion.call(questionText, 18000)
-    await poll.addQuestion(questionText, 18000)
+    const questionId = await poll.addQuestion.call(questionText, 54000, "Team", "ETHIndia")
+    await poll.addQuestion(questionText, 54000, "Team", "ETHIndia")
 
     var answerText = "This is an answer 1"
     await poll.addAnswer(questionId, answerText)
@@ -24,8 +24,8 @@ module.exports = function (deployer) {
     await poll.addAnswer(questionId, answerText)
 
     const questionText2 = "Is this a test question, number 2?"
-    const questionId2 = await poll.addQuestion.call(questionText2, 18000)
-    await poll.addQuestion(questionText2, 18000)
+    const questionId2 = await poll.addQuestion.call(questionText2, 54000)
+    await poll.addQuestion(questionText2, 54000)
 
     var answerText = "This is an answer 1"
     await poll.addAnswer(questionId2, answerText)
