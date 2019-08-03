@@ -18,6 +18,8 @@ contract Poll is Ownable {
         uint8 id;
         uint8 answerIdCounter;
         mapping (uint8 => Answer) possibleAnswers;
+        uint256 creationTime;
+        uint256 endTime;
     }
 
     struct Answer {
@@ -53,11 +55,13 @@ contract Poll is Ownable {
         verifierInterface.setPoapToken(_address);
     }
 
-    function addQuestion(string calldata _questionText) external /*onlyOwner*/ returns (uint8) {
+    function addQuestion(string calldata _questionText, uint duration) external /*onlyOwner*/ returns (uint8) {
         Question memory q;
         q.questionText = _questionText;
         q.id = questionIdCounter;
         q.answerIdCounter = 0;
+        q.creationTime = now;
+        q.endTime = now + duration; // TODO: use safe maths
         questions[questionIdCounter] = q;
 
         questionIdCounter++;
@@ -78,6 +82,10 @@ contract Poll is Ownable {
 
     function getQuestion(uint8 _questionId) public onlyValidQuestionIds(_questionId) view returns (string memory) {
         return questions[_questionId].questionText;
+    }
+
+    function getQuestionEndTime(uint8 _questionId) public onlyValidQuestionIds(_questionId) view returns (uint256) {
+        return questions[_questionId].endTime;
     }
 
     function getAnswer(uint8 _questionId, uint8 _answerId) public onlyValidAnswerIds(_questionId, _answerId) view returns (string memory) {
