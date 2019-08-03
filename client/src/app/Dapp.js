@@ -13,6 +13,11 @@ const GetAnswers = ({ questionData }) => {
   }
   /*eslint-enable */
 
+  const { useCacheSend } = drizzleReactHooks.useDrizzle()
+  // const { send, TXObjects } = useCacheSend('MyToken', 'transfer')
+
+  // const sendTransaction = ()
+
   return <Poll
     key={index}
     poll={{ expirationDateTime, creationDateTime, question, choices: allAnswers, createdBy: { username: 'EthIndia', name: 'Team' } }}
