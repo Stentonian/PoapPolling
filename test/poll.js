@@ -3,42 +3,42 @@ const Poll = artifacts.require("./Poll.sol");
 
 contract("Poll", accounts => {
   
-let verifier;
-let poll;
+    let verifier;
+    let poll;
 
-const addQuestion = async () => {
-    const questionText = "Is this a test question?"
+    const addQuestion = async () => {
+        const questionText = "Is this a test question?"
 
-    const questionId = await poll.addQuestion.call(questionText)
-    assert.equal(questionId, 0, "Invalid question ID returned")
+        const questionId = await poll.addQuestion.call(questionText)
+        assert.equal(questionId, 0, "Invalid question ID returned")
 
-    await poll.addQuestion(questionText)
+        await poll.addQuestion(questionText)
 
-    return questionId
-  }
+        return questionId
+    }
 
-beforeEach(async () => {
-    verifier = await Verifier.new();
-    poll  = await Poll.new(verifier.address);
-});
+    beforeEach(async () => {
+        verifier = await Verifier.new();
+        poll  = await Poll.new(verifier.address);
+    });
   
-  it("...adding question", async () => {
-    const questionId = await addQuestion()
-    const storedData = await poll.getQuestion.call(questionId)
-    assert.equal(storedData, "Is this a test question?", "The question text was not stored correctly.");
-  });
+    it("...adding question", async () => {
+        const questionId = await addQuestion()
+        const storedData = await poll.getQuestion.call(questionId)
+        assert.equal(storedData, "Is this a test question?", "The question text was not stored correctly.");
+    });
 
-  it("...adding answer", async () => {
-      const questionId = await addQuestion()
-      const answerText = "This is an answer"
-      
-      const answerId = await poll.addAnswer.call(questionId, answerText)
-      assert.equal(answerId, 0, "Invalid answer ID returned")
+    it("...adding answer", async () => {
+        const questionId = await addQuestion()
+        const answerText = "This is an answer"
 
-      await poll.addAnswer(questionId, answerText)
+        const answerId = await poll.addAnswer.call(questionId, answerText)
+        assert.equal(answerId, 0, "Invalid answer ID returned")
 
-      const storedData = await poll.getAnswer.call(questionId, answerId)
-      assert.equal(storedData, answerText)
-  });
+        await poll.addAnswer(questionId, answerText)
+
+        const storedData = await poll.getAnswer.call(questionId, answerId)
+        assert.equal(storedData, answerText)
+    });
 
 });
