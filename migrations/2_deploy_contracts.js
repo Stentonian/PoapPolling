@@ -23,6 +23,19 @@ module.exports = function (deployer) {
     answerText = "This is an answer 3"
     await poll.addAnswer(questionId, answerText)
 
+    const questionText2 = "Is this a test question, number 2?"
+    const questionId2 = await poll.addQuestion.call(questionText2, 18000)
+    await poll.addQuestion(questionText2, 18000)
+
+    var answerText = "This is an answer 1"
+    await poll.addAnswer(questionId2, answerText)
+
+    answerText = "This is an answer 2"
+    await poll.addAnswer(questionId2, answerText)
+
+    answerText = "This is an answer 3"
+    await poll.addAnswer(questionId2, answerText)
+
     return 'done'
   });
 };

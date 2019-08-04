@@ -88,6 +88,10 @@ contract Poll is Ownable {
         return questions[_questionId].endTime;
     }
 
+    function getQuestionStartTime(uint8 _questionId) public onlyValidQuestionIds(_questionId) view returns (uint256) {
+        return questions[_questionId].creationTime;
+    }
+
     function getAnswer(uint8 _questionId, uint8 _answerId) public onlyValidAnswerIds(_questionId, _answerId) view returns (string memory) {
         return questions[_questionId].possibleAnswers[_answerId].answerText;
     }

@@ -3,7 +3,7 @@ import { drizzleReactHooks } from 'drizzle-react'
 import Poll from "../poll/Poll";
 
 const GetAnswers = ({ questionData }) => {
-  const { numAnswers, index, question } = questionData
+  const { numAnswers, index, question, expirationDateTime, creationDateTime } = questionData
   const { useCacheCall } = drizzleReactHooks.useDrizzle()
   let allAnswers = []
   /*eslint-disable */
@@ -15,7 +15,7 @@ const GetAnswers = ({ questionData }) => {
 
   return <Poll
     key={index}
-    poll={{ choices: allAnswers, createdBy: { username: 'Eth', name: 'India' } }}
+    poll={{ expirationDateTime, creationDateTime, question, choices: allAnswers, createdBy: { username: 'EthIndia', name: 'Team' } }}
     currentVote={1}
     handleVoteChange={(event) => console.log('poll change', event)}
     handleVoteSubmit={(event) => console.log('poll submit', event)} />
@@ -28,10 +28,9 @@ const GetQuestions = ({ numQuestions }) => {
   for (let i = 0; i < numQuestions; ++i) {
     const questionStatement = useCacheCall('Poll', 'getQuestion', i)
     const numAnswers = parseInt(useCacheCall('Poll', 'getNumAnswers', i))
-    // const questionEndTime = 1556654654
-    const questionEndTime = parseInt(useCacheCall('Poll', 'getQuestionEndTime', i))
-    // const numAnswers = 1
-    allQuestions.push({ question: questionStatement, numAnswers, index: i, questionEndTime })
+    const expirationDateTime = parseInt(useCacheCall('Poll', 'getQuestionEndTime', i)) * 1000
+    const creationDateTime = parseInt(useCacheCall('Poll', 'getQuestionStartTime', i)) * 1000
+    allQuestions.push({ question: questionStatement, numAnswers, index: i, expirationDateTime, creationDateTime })
   }
   /*eslint-enable */
 

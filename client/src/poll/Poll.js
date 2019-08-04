@@ -57,6 +57,7 @@ class Poll extends Component {
 
   render() {
     const pollChoices = [];
+    console.log({ poll: this.props.poll })
     if (this.props.poll.selectedChoice || this.props.poll.expired) {
       const winningChoice = this.props.poll.expired ? this.getWinningChoice() : null;
 
