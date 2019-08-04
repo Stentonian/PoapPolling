@@ -10,6 +10,24 @@ import { Radio, Button } from 'antd';
 const RadioGroup = Radio.Group;
 
 class Poll extends Component {
+
+  constructor(props) {
+    super(props)
+
+    this.state = {
+      selectedChoice: 0,
+    }
+  }
+
+  setSelection = (event) => {
+    event.preventDefault();
+
+    this.setState({
+      ...this.state,
+      selectedChoice: event.target.value
+    });
+  }
+
   calculatePercentage = (choice) => {
     if (this.props.poll.totalVotes === 0) {
       return 0;
@@ -18,7 +36,7 @@ class Poll extends Component {
   };
 
   isSelected = (choice) => {
-    return this.props.poll.selectedChoice === choice.id;
+    return this.state.selectedChoice === choice.id;
   }
 
   getWinningChoice = () => {
@@ -102,8 +120,8 @@ class Poll extends Component {
         <div className="poll-choices">
           <RadioGroup
             className="poll-choice-radio-group"
-            onChange={this.props.handleVoteChange}
-            value={this.props.currentVote}>
+            onChange={this.setSelection}
+            value={this.state.selectedChoice}>
             {pollChoices}
           </RadioGroup>
         </div>
@@ -144,7 +162,7 @@ function CompletedOrVotedPollChoice(props) {
             />) : null
         }
       </span>
-      <span className={props.isWinner ? 'cv-choice-percent-chart winner' : 'cv-choice-percent-chart'}
+      <span className={/*props.isWinner ? 'cv-choice-percent-chart winner' : */'cv-choice-percent-chart'}
         style={{ width: props.percentVote + '%' }}>
       </span>
     </div>
