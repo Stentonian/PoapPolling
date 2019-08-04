@@ -95,6 +95,15 @@ contract Poll is Ownable {
         return answerId;
     }
 
+    function incrementPoll(uint8 _questionId, uint8 _answerId) public onlyValidAnswerIds(_questionId, _answerId) {
+        verifyUserOwnsAtLeastOnePoapToken(msg.sender);
+        questions[_questionId].possibleAnswers[_answerId].poll++;
+    }
+
+    function getPoll(uint8 _questionId, uint8 _answerId) public onlyValidAnswerIds(_questionId, _answerId) view returns (uint8) {
+        return questions[_questionId].possibleAnswers[_answerId].poll;
+    }
+
     function getQuestion(uint8 _questionId) public onlyValidQuestionIds(_questionId) view returns (string memory) {
         return questions[_questionId].questionText;
     }
