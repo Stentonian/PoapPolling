@@ -24,8 +24,8 @@ module.exports = function (deployer) {
     await poll.addAnswer(questionId, answerText)
 
     const questionText2 = "Is this a test question, number 2?"
-    const questionId2 = await poll.addQuestion.call(questionText2, 54000)
-    await poll.addQuestion(questionText2, 54000)
+    const questionId2 = await poll.addQuestion.call(questionText2, 54000, "Team", "ETHIndia")
+    await poll.addQuestion(questionText2, 54000, "Team", "ETHIndia")
 
     var answerText = "This is an answer 1"
     await poll.addAnswer(questionId2, answerText)

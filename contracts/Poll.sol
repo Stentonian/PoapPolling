@@ -67,13 +67,16 @@ contract Poll is Ownable {
         verifierInterface.verifyUserOwnsAtLeastOnePoapToken(_user);
     }
 
-    function addQuestion(string calldata _questionText, uint duration) external /*onlyOwner*/ returns (uint8) {
+    function addQuestion(string calldata _questionText, uint duration, string calldata _creatorsName, string calldata _creatorsOrganisation)
+            external /*onlyOwner*/ returns (uint8) {
         Question memory q;
         q.questionText = _questionText;
         q.id = questionIdCounter;
         q.answerIdCounter = 0;
         q.creationTime = now;
         q.endTime = now + duration; // TODO: use safe maths
+        q.creatorsName = _creatorsName;
+        q.creatorsOrganisation = _creatorsOrganisation;
         questions[questionIdCounter] = q;
 
         questionIdCounter++;
